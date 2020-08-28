@@ -1,3 +1,7 @@
+//por Rafael Stoffalette João
+//rafaelstojoao@gmail.com
+
+
 // inclusão das bibliotecas necessárias para o funcionamento
 
 #include <stdio.h>  //biblioteca de entrada de saída de dados
