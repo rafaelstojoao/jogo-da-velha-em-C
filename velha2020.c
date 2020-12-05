@@ -198,8 +198,8 @@ while(contadorDeMovimentos <= 9 && alguemGanhou == 0){
 		tabuleiro[linhaJogada][colunaJogada] = simboloComputador;
 		jogadaPassada = simboloComputador;
 	}
-	system("clear"); //( Utilize essa linha se você usa linux)
-	// system("cls"); //(Utilize essa linha se você usa  windows)
+	//system("clear"); //( Utilize essa linha se você usa linux)
+	system("cls"); //(Utilize essa linha se você usa  windows)
 
 
 	
