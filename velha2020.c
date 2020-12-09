@@ -234,19 +234,25 @@ while(contadorDeMovimentos <= 9 && alguemGanhou == 0){
 		else{
 			printf("\n Vitória do player HUMANO!!!");
 		}
-	
-		printf("\n CONTINUAR JOGANDO? S ou N ?");
+	}
+	if (alguemGanhou >= 1){
+		printf("\n\n\n\n CONTINUAR JOGANDO? S ou N ?");
 		fflush(stdin);
-		char play = getchar();
+		char play;
+		scanf(" %c",&play
+		);
+
+	
 		if(play == 's' ||play == 'S' ||play == 'Y' ||play == 'y'){
-			alguemGanhou == 0;
+			
+			alguemGanhou = 0;
 			contadorDeMovimentos = 1;
 			inicializaMatriz(tabuleiro);
-								
+
 			printf("\n Informe se você deseja jogar com 'X' ou 'O'");
 			fflush(stdin); //Para prevenir buffer...
 			scanf(" %c",&simboloHumano);
-		
+			
 			if( simboloHumano == 'X' || simboloHumano =='x')
 				simboloComputador = 'O';
 			else if(simboloHumano == '0' || simboloHumano == 'O' || simboloHumano == 'o')
@@ -258,9 +264,11 @@ while(contadorDeMovimentos <= 9 && alguemGanhou == 0){
 				fflush(stdin);
 				getchar(); //atua como um pause no sistema
 			}
-	
+
+								
 		}
 	}
+	
 }
 	printf("\n\n\n");
 	system("pause"); //Comente essa linha caso você não utilize Windows.
