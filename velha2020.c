@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include <locale.h>
+
+ 
 
 int geraValorAleatorio(int divisor){ //Cada vez que essa função for chamada ela retona um valor aleatório entre [0 e 2[
 	int valorAleatorio;
@@ -76,38 +79,31 @@ int verificaResultado(char tabuleiro[3][3],int quantJogadas){
 	}
 	else if(quantJogadas == 9){
 		printf("\n DEU VELHA!!!!");
-		resultado = 1;
+		resultado = 2;
 	}
 	return resultado;
 }
 
 
 void imprimeTabuleiro(char tabuleiro[3][3]){
+	printf("\n\n");
 	int linha,coluna;
 	for (linha=0;linha<3;linha++){
-		printf("\n");
+		
+		if(linha==0)
+				printf("     | 1 | 2 | 3 |");
+		printf("\n (%d) |",linha+1);
+		
 		for (coluna=0;coluna<3;coluna++){
-			printf("| %c |",tabuleiro[linha][coluna]);
+						
+			printf(" %c |",tabuleiro[linha][coluna]);
 		}
 	}
-
+	printf("\n\n\n");
 	return;
 }
 
-
-
-int main(void){
-srand(time(0));  			//Essa função  inicializa o contador de tempo para gerar numeros aleatórios	
-
-/*	
--------
-|X|O|O|
-|O|X|X|
-|O|O|X|
--------
-*/
-
-char tabuleiro[3][3];
+void inicializaMatriz(char tabuleiro[3][3]){
 int linha;
 int coluna;
 	// -------
@@ -123,6 +119,22 @@ for (linha =0; linha<3;linha++){
 	
 }
 
+}
+
+int main(void){
+	setlocale(LC_ALL, "Portuguese"); 
+	srand(time(0));  			//Essa função  inicializa o contador de tempo para gerar numeros aleatórios	
+
+/*	
+-------
+|X|O|O|
+|O|X|X|
+|O|O|X|
+-------
+*/
+
+char tabuleiro[3][3];
+inicializaMatriz(tabuleiro);
 int contadorDeMovimentos = 1;
 int alguemGanhou = 0;//1 se alguem ganhou.
 int linhaJogada,colunaJogada;
@@ -139,11 +151,17 @@ printf("\n Informe se você deseja jogar com 'X' ou 'O'");
 fflush(stdin); //Para prevenir buffer...
 scanf(" %c",&simboloHumano);
 
-if( simboloHumano == 'X')
+if( simboloHumano == 'X' || simboloHumano =='x')
 	simboloComputador = 'O';
-else
+else if(simboloHumano == '0' || simboloHumano == 'O' || simboloHumano == 'o')
 	simboloComputador = 'X';
-
+else{
+	printf("Símbolo não válido, valor X atribuído para Player humano");
+	simboloComputador = 'O';
+	simboloHumano = 'X';
+	fflush(stdin);
+	getchar(); //atua como um pause no sistema
+}
 
 while(contadorDeMovimentos <= 9 && alguemGanhou == 0){
 	
@@ -159,8 +177,9 @@ while(contadorDeMovimentos <= 9 && alguemGanhou == 0){
 	    	if(quemJoga == 1)
 	    		linhaJogada = geraValorAleatorio(3);
 	    	else{
-				printf("\n Por favor, informe uma linha onde quer jogar");
+				printf("\n Por favor, informe uma LINHA onde quer jogar");
 				scanf("%d",&linhaJogada);
+				linhaJogada -=1;
 				}	
 		if(linhaJogada < 0 || linhaJogada >= 3)
 				printf("\nMovimento inválido!!!\n");
@@ -173,8 +192,9 @@ while(contadorDeMovimentos <= 9 && alguemGanhou == 0){
 				colunaJogada = geraValorAleatorio(3);
 			
 			else{
-				printf("\n Por favor, informe uma coluna onde quer jogar");
+				printf("\n Por favor, informe uma COLUNA onde quer jogar");
 				scanf("%d",&colunaJogada);
+				colunaJogada -=1;
 			}
 
 			if(colunaJogada<0 || colunaJogada>=3)
@@ -214,12 +234,36 @@ while(contadorDeMovimentos <= 9 && alguemGanhou == 0){
 		else{
 			printf("\n Vitória do player HUMANO!!!");
 		}
+	
+		printf("\n CONTINUAR JOGANDO? S ou N ?");
+		fflush(stdin);
+		char play = getchar();
+		if(play == 's' ||play == 'S' ||play == 'Y' ||play == 'y'){
+			alguemGanhou == 0;
+			contadorDeMovimentos = 1;
+			inicializaMatriz(tabuleiro);
+								
+			printf("\n Informe se você deseja jogar com 'X' ou 'O'");
+			fflush(stdin); //Para prevenir buffer...
+			scanf(" %c",&simboloHumano);
+		
+			if( simboloHumano == 'X' || simboloHumano =='x')
+				simboloComputador = 'O';
+			else if(simboloHumano == '0' || simboloHumano == 'O' || simboloHumano == 'o')
+				simboloComputador = 'X';
+			else{
+				printf("Símbolo não válido, valor X atribuído para Player humano");
+				simboloComputador = 'O';
+				simboloHumano = 'X';
+				fflush(stdin);
+				getchar(); //atua como um pause no sistema
+			}
+	
+		}
 	}
-
-
-
-
 }
-
+	printf("\n\n\n");
+	system("pause"); //Comente essa linha caso você não utilize Windows.
 	return 0;
 }
+
